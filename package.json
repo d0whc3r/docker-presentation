@@ -1,0 +1,20 @@
+{
+  "name": "docker-presentation",
+  "version": "1.0.0",
+  "description": "Basic initiation to docker",
+  "main": "index.js",
+  "repository": "https://github.com/d0whc3r/docker-presentation",
+  "author": "d0whc3r",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "backslide": "2.3.0",
+    "gh-pages": "1.1.0"
+  },
+  "scripts": {
+    "start": "bs serve ./presentation",
+    "build": "bs export ./presentation -o ./dist",
+    "gpage": "gh-pages -d ./dist",
+    "deploy": "npm run build && npm run gpage"
+  }
+}
