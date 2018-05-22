@@ -34,7 +34,7 @@ Docker is *"like"* a virtual machine. But sharing the same Linux kernel as host
 
 --
 
-**+** performance boost, **-** size of the application
+**+** performance boost, **-** application size
 
 --
 
@@ -56,23 +56,122 @@ Docker allows them to use thousand of programs already designed to run in a Dock
 
 ---
 
+# Virtual Machine vs Docker
+
+--
+
+.col-6[
+![Virtual Machine](./images/VM.png)
+]
+
+--
+
+.col-6[
+![Container](./images/container.png)
+]
+
+---
+
+# Docker Terminology
+
+--
+
+## Image
+
+It is a "**cooking recipe**"
+
+Definitions how to boot the environment, monotask
+
+--
+
+## Container
+
+**Instantiations of images**
+
+Like in POO; Images -> Class, Container -> Objects. Not persistent.
+
+Comunication tcp/ip
+
+---
+
+# Docker Terminology
+
+--
+
+## Volumes
+
+**Underlying data layer**.
+
+Can be used across containers.
+
+Persistent in host
+
+--
+
+## Networks
+
+Docker comes with its own networking capabilities
+
+The name of a container is its hostname
+
+---
+
+# Docker structure
+
+.center[
+![Docker structure](./images/docker-structure-01.jpg)
+]
+
+---
+
+# Docker structure
+
+.center[
+![Docker structure](./images/docker-structure-02.jpg)
+]
+
+---
+
+# Docker structure
+
+.center[
+![Docker structure](./images/docker-structure-03.jpg)
+]
+
+---
+
+# Docker structure
+
+.center[
+![Docker structure](./images/docker-structure-final.jpg)
+]
+
+---
+
 # Getting started
+
+--
 
 .col-6[
 ![Docker lifecycle](./images/lifecycle.jpg)
 ]
+
+--
+
 .col-6[
 `Dockerfile` example 1
 .small.no-margin[
 FROM node:8
 
-RUN apt-get update && apt-get -yq upgrade
+RUN apt-get update && apt-get -y upgrade
 
 COPY ./src /app/src
 
+COPY package.json /app/
+
 RUN npm install
 
-CMD npm start
+CMD ["npm", "start"]
 ]
 
 `Dockerfile` example 2
@@ -110,6 +209,31 @@ CMD java -jar /application/app.war
 # Docker basic usage
 
 ```bash
+$ docker build -t <image name> <path/to/Dockerfile>
+```
+
+```bash
+$ docker run -d -p 8080:80 nginx
+  777aff8f80f50786a48299b243506a1bd4db175d1a62c372f7c8c54c7a8412ad
+```
+
+````bash
+$ docker ps
+  CONTAINER ID   IMAGE    COMMAND                  CREATED          STATUS         PORTS                  NAMES
+  777aff8f80f5   nginx    "nginx -g 'daemon ..."   27 seconds ago   Up 8 seconds   0.0.0.0:8088->80/tcp   fervent_bose
+````
+
+```bash
+$ docker images
+REPOSITORY   TAG      IMAGE ID      CREATED       SIZE
+nginx        latest   e548f1a579cf  3 months ago  109MB
+```
+
+---
+
+# Docker basic usage
+
+```bash
 $ docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -120,10 +244,6 @@ Status: Downloaded newer image for hello-world:latest
 Hello from Docker!
 This message shows that your installation appears to be working correctly
 ...
-```
-
-```bash
-$ docker run -d -p 8080:80 nginx
 ```
 
 ---
@@ -144,10 +264,6 @@ Status: Downloaded newer image for ubuntu:17.04
 root@5812c9945247:/# ls
 bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 root@5812c9945247:/#
-```
-
-```bash
-$ docker build -t <image name> <path/to/Dockerfile>
 ```
 
 ---
