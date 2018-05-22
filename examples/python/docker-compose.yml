@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  python-sample:
+    build: .
+    ports:
+      - "4001:80"
+    restart: unless-stopped
+    links:
+      - redis-database:redis
+  redis-database:
+    image: redis

@@ -18,6 +18,8 @@ class: impact
 
 # What is Docker?
 
+--
+
 Docker is a tool designed to make it easier to **create**, **deploy**, and **run** *applications* by using **containers**
 
 --
@@ -88,7 +90,7 @@ Definitions how to boot the environment, monotask
 
 **Instantiations of images**
 
-Like in POO; Images -> Class, Container -> Objects. Not persistent.
+Like in POO; Image -> Class, Container -> Object. Not persistent.
 
 Comunication tcp/ip
 
@@ -160,29 +162,25 @@ The name of a container is its hostname
 
 .col-6[
 `Dockerfile` example 1
-.small.no-margin[
+.small[
+```docker
 FROM node:8
-
 RUN apt-get update && apt-get -y upgrade
-
-COPY ./src /app/src
-
+COPY src /app/src
 COPY package.json /app/
-
 RUN npm install
-
 CMD ["npm", "start"]
+```
 ]
 
 `Dockerfile` example 2
-.small.no-margin[
+.small[
+````docker
 FROM java:9-jdk
-
 EXPOSE 8080
-
-COPY ./target/*.war /application/app.war
-
-CMD java -jar /application/app.war
+COPY target/*.jar /application/app.jar
+CMD java -jar /application/app.jar
+````
 ]
 ]
 
@@ -190,26 +188,48 @@ CMD java -jar /application/app.war
 
 # Dockerfile basic commands
 
-*FROM*: Base image to use
+`FROM`: Base image to use
 
-*RUN*: Execute instruction in layer
+`RUN`: Execute instruction in layer
 
-*EXPOSE*: Port/protocol to listen in container (documentation)
+`EXPOSE`: Port/protocol to listen in container (documentation)
 
-*ENV*: Define environment variables
+`ENV`: Define environment variables
 
-*COPY*: Copy files when image is created
+`COPY`: Copy files when image is created
 
-*CMD*: Command as default in container start
+`CMD`: Command as default in container start
 
-*WORKDIR*, *USER*, *ENTRYPOINT*, *ADD*, *LABEL*, *VOLUME* ...
+`WORKDIR`, `USER`, `ENTRYPOINT`, `ADD`, `LABEL`, `VOLUME`, ...
+
+---
+
+# Docker basic commands
+
+```bash
+$ docker --help
+```
+
+`build`: Build an image using Dockerfile
+
+`run`: Create a container by running image on it
+
+`image`: Manage images in host
+
+`ps`: List containers
+
+`container`: Manage containers
+
+`exec`: Execute command in a running container
+
+`network`, `cp`, `start`, `stop`, `info`, `logs`, `push`, `pull`, ...
 
 ---
 
 # Docker basic usage
 
 ```bash
-$ docker build -t <image name> <path/to/Dockerfile>
+$ docker build -t <image name> <path/to/Dockerfile/>
 ```
 
 ```bash
@@ -278,6 +298,7 @@ $ docker login
   Username: username
   Password: ********
   Login Succeeded
+$ docker build -t username/repository:tag .
 $ docker tag image username/repository:tag
 $ docker push username/repository:tag
 $ docker run username/repository:tag
@@ -286,3 +307,53 @@ $ docker run username/repository:tag
 ---
 
 # Docker compose
+
+Tool for defining and running multi-container Docker apps
+
+User `YAML` file to configure your application's services
+
+Start, stop, rebuild, view status, logs of all services or selected only
+
+[https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Windows-x86_64.exe](https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Windows-x86_64.exe)
+
+---
+
+# Docker compose
+
+`docker-compose.yml` example
+
+```yaml
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+      - logvolume01:/var/log:ro
+    links:
+      - database
+  database:
+    image: mysql
+volumes:
+  logvolume01: {}
+```
+
+---
+
+.center[
+# End
+]
+
+## Useful links
+
+- [https://docs.docker.com/get-started/](https://docs.docker.com/get-started/)
+
+- [https://hub.docker.com/](https://hub.docker.com/)
+
+- [https://docs.docker.com/compose/overview/](https://docs.docker.com/compose/overview/)
+
+- [https://docs.docker.com/machine/overview/](https://docs.docker.com/machine/overview/)
+
+- [https://docs.docker.com/samples/](https://docs.docker.com/samples/)
