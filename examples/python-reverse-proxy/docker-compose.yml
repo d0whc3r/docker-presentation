@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  python-sample:
+    build: .
+    expose:
+      - "8000"
+    restart: unless-stopped
+    links:
+      - redis-database:redis
+    depends_on:
+      - nginx
+    environment:
+      # Virtual host is matching windows ip assigned by default to boot2docker, otherwise you could define VIRTUAL_HOST: 'localhost'
+      VIRTUAL_HOST: '192.168.99.100'
+  redis-database:
+     image: redis
+  nginx:
+     image: jwilder/nginx-proxy
+     volumes:
+       - "/var/run/docker.sock:/tmp/docker.sock:ro"
+     ports:
+       - "0.0.0.0:4001:80"
