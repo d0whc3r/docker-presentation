@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  python-sample:
+    build: .
+    expose:
+      - "80"
+    restart: unless-stopped
+    links:
+      - redis-database:redis
+    depends_on:
+      - nginx
+    environment:
+      VIRTUAL_HOST: 'localhost'
+  redis-database:
+     image: redis
+  nginx:
+     image: jwilder/nginx-proxy
+     volumes:
+       - "/var/run/docker.sock:/tmp/docker.sock:ro"
+     ports:
+       - "4001:80"
