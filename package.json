@@ -6,14 +6,15 @@
   "repository": "https://github.com/d0whc3r/docker-presentation",
   "author": "d0whc3r",
   "license": "MIT",
-  "private": false,
   "devDependencies": {
     "backslide": "2.3.0",
     "gh-pages": "1.1.0"
   },
   "scripts": {
     "start": "bs serve ./presentation",
-    "build": "bs export ./presentation -o ./dist",
+    "build:html": "bs export ./presentation -o ./dist",
+    "build:pdf": "bs pdf ./presentation -o ./dist",
+    "build": "rm -fr dist && mkdir dist && cp -r template/*.js dist/ && cp -r  presentation/* dist/ && cp -r .tmp/* dist/",
     "gpage": "gh-pages -d ./dist",
     "deploy": "npm run build && npm run gpage"
   }
