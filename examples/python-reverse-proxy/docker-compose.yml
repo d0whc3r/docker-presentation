@@ -4,14 +4,15 @@ services:
   python-sample:
     build: .
     expose:
-      - "80"
+      - "8000"
     restart: unless-stopped
     links:
       - redis-database:redis
     depends_on:
       - nginx
     environment:
-      VIRTUAL_HOST: 'localhost'
+      # Virtual host is matching windows ip assigned by default to boot2docker, otherwise you could define VIRTUAL_HOST: 'localhost'
+      VIRTUAL_HOST: '192.168.99.100'
   redis-database:
      image: redis
   nginx:
@@ -19,4 +20,4 @@ services:
      volumes:
        - "/var/run/docker.sock:/tmp/docker.sock:ro"
      ports:
-       - "4001:80"
+       - "0.0.0.0:4001:80"
