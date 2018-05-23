@@ -1,4 +1,4 @@
-title: Docker presentation
+title: Docker
 class: animation-fade
 layout: true
 
@@ -24,11 +24,11 @@ Docker is a tool designed to make it easier to **create**, **deploy**, and **run
 
 --
 
-Containers allow **package up** an application and ship it out as one **package**
+Containers allow **packing up** an application and ship it out as one **artifact**
 
 --
 
-Developer can *rest* assured that the application will run on any other *Linux* machine
+Developer can *rest* assured that the application will run on any other *environment*
 
 --
 
@@ -54,7 +54,7 @@ Developers can focus on writing code without worrying about the system
 
 --
 
-Docker allows them to use thousand of programs already designed to run in a Docker container as a part of their application
+Docker allows developers to use thousands of applications already build to run in a Docker container
 
 ---
 
@@ -298,7 +298,7 @@ $ docker login
   Username: username
   Password: ********
   Login Succeeded
-$ docker build -t username/repository:tag .
+$ docker build -t username/repository:tag
 $ docker tag image username/repository:tag
 $ docker push username/repository:tag
 $ docker run username/repository:tag
