@@ -186,11 +186,27 @@ CMD java -jar /application/app.jar
 
 ---
 
+# Dockerfile basic commands
+
+`FROM`: Base image to use
+
+`RUN`: Execute instruction in layer
+
+`EXPOSE`: Port/protocol to listen in container (documentation)
+
+`ENV`: Define environment variables
+
+`COPY`: Copy files when image is created
+
+`CMD`: Command as default in container start
+
+`WORKDIR`, `USER`, `ENTRYPOINT`, `ADD`, `LABEL`, `VOLUME`, ...
+
+---
+
 # Dockerfile multi-stage builds
 
 ## Before multi-stage
-
---
 
 .col-6[
 `Dockerfile.build`:
@@ -255,24 +271,6 @@ FROM nginx:latest
 COPY --from=builder /app/build/www /var/www/html
 EXPOSE 80
 ```
-
----
-
-# Dockerfile basic commands
-
-`FROM`: Base image to use
-
-`RUN`: Execute instruction in layer
-
-`EXPOSE`: Port/protocol to listen in container (documentation)
-
-`ENV`: Define environment variables
-
-`COPY`: Copy files when image is created
-
-`CMD`: Command as default in container start
-
-`WORKDIR`, `USER`, `ENTRYPOINT`, `ADD`, `LABEL`, `VOLUME`, ...
 
 ---
 
