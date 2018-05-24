@@ -186,6 +186,78 @@ CMD java -jar /application/app.jar
 
 ---
 
+# Dockerfile multi-stage builds
+
+## Before multi-stage
+
+--
+
+.col-6[
+`Dockerfile.build`:
+
+```docker
+FROM node:8
+WORKDIR /app
+COPY src .
+RUN npm install \
+  && npm run build
+```
+]
+
+.col-1[&nbsp;]
+
+.col-5[
+`Dockerfile`:
+
+```docker
+FROM nginx:latest
+COPY www /var/www/html
+EXPOSE 80
+```
+]
+
+---
+
+# Dockerfile multi-stage builds
+
+## Before multi-stage
+
+`build.sh`:
+
+```bash
+#!/bin/sh
+echo "Building application:build"
+docker build -t application:build . -f Dockerfile.build
+docker container create --name extract application:build
+docker container cp extract:/app/build/www ./www
+docker container rm -f extract
+echo "Building application:latest"
+docker build --no-cache -t application:latest .
+rm -fr ./app
+```
+
+---
+
+# Dockerfile multi-stage builds
+
+## With multi-stage
+
+`Dockerfile`:
+
+```docker
+FROM node:8 as builder
+WORKDIR /app
+COPY src .
+RUN npm install \
+  && npm run build
+  
+FROM nginx:latest
+COPY --from=builder /app/build/www /var/www/html
+EXPOSE 80
+```
+
+---
+
 # Dockerfile basic commands
 
 `FROM`: Base image to use
