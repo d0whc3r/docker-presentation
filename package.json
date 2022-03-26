@@ -7,7 +7,7 @@
   "author": "d0whc3r",
   "license": "MIT",
   "devDependencies": {
-    "backslide": "2.3.4"
+    "backslide": "3.1.0"
   },
   "scripts": {
     "start": "bs serve ./presentation",
